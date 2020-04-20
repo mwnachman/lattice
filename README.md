@@ -1,2 +1,2 @@
 # lattice
-coding assignment for Lattice interview
+Coding assignment for Lattice interview
