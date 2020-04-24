@@ -1,12 +1,8 @@
 # Dependency directories
 node_modules/
 
-# Optional npm cache directory
-.npm
-
 # Built code
 build/
 
 # Environment variables, access tokens, other runtime data
-config.json
 config/server.json

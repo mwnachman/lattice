@@ -1,0 +1,9 @@
+{
+  "movieDatabase": {
+    "API_KEY": "INSERT HERE",
+    "MOVIE_URL": "https://api.themoviedb.org/3"
+  },
+  "BASE_URL": {
+    "development": "http://localhost:3000"
+  }
+}
