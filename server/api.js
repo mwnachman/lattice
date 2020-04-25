@@ -8,8 +8,8 @@ async function getPopularMovies() {
     try {
       const response = await axios.get(`${APIRoot}/movie/popular?api_key=${API_KEY}&language=en-US&page=1`)
       if (response.status == 200) {
-        const data = response.data
-        return data
+        const movies = response.data.results
+        return movies
       }
     } catch (error) {
       console.error(error)
