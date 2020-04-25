@@ -13,7 +13,6 @@ class Movies extends React.Component {
     this.state = {
       movies: []
     }
-    this.fetchPopularMovies = this.fetchPopularMovies.bind(this)
   }
 
   componentDidMount() {
@@ -21,7 +20,7 @@ class Movies extends React.Component {
   }
 
   async fetchPopularMovies() {
-    const promise = await axios.get(`${APIRoot}/popular`)
+    const promise = await axios.get(`${APIRoot}/movie/popular`)
     const status = promise.status
     if (status == 200) {
       const data = promise.data

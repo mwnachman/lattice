@@ -32,7 +32,7 @@ const useStyles = makeStyles(theme => ({
   },
   searchIcon: {
     color: 'gray',
-    padding: theme.spacing(0, 2),
+    padding: theme.spacing(0, 1),
     height: '100%',
     position: 'absolute',
     pointerEvents: 'none',
@@ -43,15 +43,17 @@ const useStyles = makeStyles(theme => ({
   inputRoot: {
     color: 'inherit',
   },
-  inputInput: {
+  inputTypeSearch: {
     padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
-    paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
-    transition: theme.transitions.create('width'),
+    paddingLeft: `calc(1em + ${theme.spacing(3)}px)`,
     width: '100%',
     [theme.breakpoints.up('md')]: {
       width: '20ch',
     },
+  },
+  paper: {
+    width: 230,
+    marginTop: 2,
   }
 }));
 

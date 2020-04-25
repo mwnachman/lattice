@@ -6,7 +6,32 @@ const API_KEY = config.movieDatabase.API_KEY
 
 async function getPopularMovies() {
     try {
-      const response = await axios.get(`${APIRoot}/movie/popular?api_key=${API_KEY}&language=en-US&page=1`)
+      const response = await axios({
+        method: 'GET',
+        url: `${APIRoot}/movie/popular?language=en-US&page=1`,
+        params: {
+          api_key: API_KEY
+        }
+      })
+      if (response.status == 200) {
+        const movies = response.data.results
+        return movies
+      }
+    } catch (error) {
+      console.error(error)
+    }
+}
+
+async function searchMovies(queryString) {
+    try {
+      const response = await axios({
+        method: 'GET',
+        url: `${APIRoot}/search/movie?language=en-US&page=1&include_adult=false`,
+        params: {
+          query: queryString,
+          api_key: API_KEY
+        }
+      })
       if (response.status == 200) {
         const movies = response.data.results
         return movies
@@ -17,5 +42,6 @@ async function getPopularMovies() {
 }
 
 module.exports = {
-  getPopularMovies
+  getPopularMovies,
+  searchMovies
 }
