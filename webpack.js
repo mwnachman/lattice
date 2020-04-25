@@ -7,7 +7,6 @@ const devMode = process.env.NODE_ENV !== 'production'
 module.exports = {
   entry: [
     './src/index.js',
-    './src/index.less',
     'webpack-dev-server/client?http://localhost:8080',
     'webpack/hot/only-dev-server'
   ],
@@ -28,11 +27,10 @@ module.exports = {
         }
       },
       {
-        test: /\.(css|less)$/,
+        test: /\.(css)$/,
         use: [
           devMode ? 'style-loader' : MiniCssExtractPlugin.loader,
-          'css-loader',
-          'less-loader'
+          'css-loader'
         ]
       },
       {
