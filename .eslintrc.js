@@ -46,15 +46,13 @@ module.exports = {
       "error",
       { "maximum": 2 }
     ],
-    "react/no-unused-prop-types": [
-      "error"
-    ],
     "react/prefer-stateless-function": [
       "error"
     ],
     "react/jsx-wrap-multilines": [
       "error"
     ],
+    "react/prop-types": 0,
     "quotes": [
       "error",
       "single"
