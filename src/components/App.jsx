@@ -1,20 +1,29 @@
 import React from 'react'
-import { CssBaseline, Container } from '@material-ui/core'
+import {
+  BrowserRouter as Router,
+  Redirect,
+  Route,
+  Switch } from 'react-router-dom'
+import { CssBaseline } from '@material-ui/core'
 
+import MovieDetail from './MovieDetail.jsx'
 import Navbar from './Navbar.jsx'
-import Movies from './Movies.jsx'
+import Popular from './Popular.jsx'
 import useNavbarStyles from '../style/navbar'
 
 const App = () => {
   const navbarClasses = useNavbarStyles()
   return (
-    <React.Fragment>
+    <Router>
       <CssBaseline />
       <Navbar styles={navbarClasses}/>
-      <Container>
-        <Movies/>
-      </Container>
-    </React.Fragment>
+      <Switch>
+        <Route exact path="/"
+               component={() => <Redirect to="/popular"/>}/>
+        <Route path='/popular' component={Popular}/>
+        <Route path='/details' component={MovieDetail}/>
+      </Switch>
+    </Router>
   )
 }
 

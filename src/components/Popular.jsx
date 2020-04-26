@@ -1,7 +1,7 @@
 /* global process:false */
 import React from 'react'
 import axios from 'axios'
-import { Box, List, ListItem } from '@material-ui/core'
+import { Container, List, ListItem } from '@material-ui/core'
 
 import * as config from '../../config/server.json'
 
@@ -31,7 +31,7 @@ class Movies extends React.Component {
   render() {
     const {movies} = this.state
     return (
-      <Box>
+      <Container>
         <List>
         {movies.map(movie => {
           return (
@@ -39,7 +39,7 @@ class Movies extends React.Component {
           )
         })}
         </List>
-      </Box>
+      </Container>
     )
   }
 }
