@@ -1,5 +1,6 @@
 /* global process:false */
 import React from 'react'
+import PropTypes from 'prop-types'
 import axios from 'axios'
 import { Redirect } from 'react-router-dom'
 import {
@@ -25,6 +26,9 @@ const MovieDetailWrapper = ({ movie }) => {
   }
   return <Redirect to='/popular'/>
 }
+MovieDetailWrapper.propTypes = {
+  movie: PropTypes.object
+}
 
 const CastNames = ({ cast }) => {
   const names = getCastNameString(cast)
@@ -33,6 +37,9 @@ const CastNames = ({ cast }) => {
       Cast: {names}
     </React.Fragment>
   )
+}
+CastNames.propTypes = {
+  cast: PropTypes.arrayOf(PropTypes.object)
 }
 
 class MovieDetail extends React.Component {
@@ -73,7 +80,9 @@ class MovieDetail extends React.Component {
             <Grid container spacing={2}>
               <Grid item>
                 <ButtonBase className={styles.image}>
-                  <img className={styles.img} src={`http://image.tmdb.org/t/p/w185/${movie.poster_path}`}/>
+                  <img className={styles.img}
+                       src={`http://image.tmdb.org/t/p/w185/${movie.poster_path}`}
+                       alt='&nbsp;Image Not Found'/>
                 </ButtonBase>
               </Grid>
               <Grid item xs={12} 
@@ -109,6 +118,10 @@ class MovieDetail extends React.Component {
     } return <LinearProgress />
 
   }
+}
+MovieDetail.propTypes = {
+  movie: PropTypes.object,
+  styles: PropTypes.object
 }
 
 export default MovieDetailWrapper

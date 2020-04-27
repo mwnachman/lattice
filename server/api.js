@@ -22,6 +22,24 @@ async function getPopularMovies() {
   }
 }
 
+async function getMovieGenres() {
+  try {
+    const response = await axios({
+      method: 'GET',
+      url: `${APIRoot}/genre/movie/list?language=en-US`,
+      params: {
+        api_key: API_KEY
+      }
+    })
+    if (response.status == 200) {
+      const genres = response.data.genres
+      return genres
+    }
+  } catch (error) {
+    console.error(error)
+  }
+}
+
 async function getCredits(movieId) {
   try {
     const response = await axios({
@@ -61,6 +79,7 @@ async function searchMovies(queryString) {
 
 module.exports = {
   getPopularMovies,
+  getMovieGenres,
   getCredits,
   searchMovies
 }
