@@ -15,7 +15,6 @@
     "type": "git",
     "url": "git+https://github.com/mwnachman/lattice.git"
   },
-  "author": "Meredith Latasa",
   "dependencies": {
     "@babel/core": "^7.9.0",
     "@babel/plugin-proposal-class-properties": "^7.2.1",
