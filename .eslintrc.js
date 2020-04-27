@@ -46,6 +46,13 @@ module.exports = {
       "error",
       { "maximum": 2 }
     ],
+    "react/prop-types": [
+      0
+    ],
+    "react/jsx-max-props-per-line": [
+      "error",
+      { "maximum": 2 }
+    ],
     "react/prefer-stateless-function": [
       "error"
     ],

@@ -1,47 +1,32 @@
-/* global process:false */
 import React from 'react'
-import axios from 'axios'
-import { Container, List, ListItem } from '@material-ui/core'
+import { Link as RouterLink } from 'react-router-dom'
+import {
+  Container,
+  LinearProgress,
+  Link,
+  List,
+  ListItem
+} from '@material-ui/core'
 
-import * as config from '../../config/server.json'
-
-const APIRoot = config.BASE_URL[process.env.NODE_ENV || 'development']
-
-class Movies extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      movies: []
-    }
-  }
-
-  componentDidMount() {
-    this.fetchPopularMovies()
-  }
-
-  async fetchPopularMovies() {
-    const promise = await axios.get(`${APIRoot}/movie/popular`)
-    const status = promise.status
-    if (status == 200) {
-      const data = promise.data
-      this.setState({ movies: data })
-    }
-  }
-
-  render() {
-    const {movies} = this.state
+const Popular = ({movies, selectMovie}) => {
+  if (movies) {
     return (
       <Container>
         <List>
-        {movies.map(movie => {
-          return (
-            <ListItem key={movie.title}>{movie.title}</ListItem>
-          )
-        })}
+          {movies.map(movie => (
+            <ListItem key={movie.id} onClick={() => selectMovie(movie)}>
+              <Link style={{color: 'black'}}
+                    component={RouterLink}
+                    to='/details'
+              >
+                {movie.title}
+              </Link>
+            </ListItem>
+          ))}
         </List>
       </Container>
     )
-  }
+  } return <LinearProgress />
 }
 
-export default Movies
+export default Popular

@@ -14,9 +14,15 @@ import {
 import MovieIcon from '@material-ui/icons/Movie'
 import SearchIcon from '@material-ui/icons/Search'
 
+import useStyles from '../style/navbar'
 import * as config from '../../config/server.json'
 
 const APIRoot = config.BASE_URL[process.env.NODE_ENV || 'development']
+
+const NavbarWrapper = props => {
+  const styles = useStyles()
+  return <Navbar styles={styles} {...props} />
+}
 
 class Navbar extends React.Component {
   constructor(props) {
@@ -26,6 +32,7 @@ class Navbar extends React.Component {
       searchResults: []
     }
     this.query = this.query.bind(this)
+    this.addMovie = this.addMovie.bind(this)
   }
 
   async query({target: {value}}) {
@@ -35,7 +42,7 @@ class Navbar extends React.Component {
       const status = promise.status
       if (status == 200) {
         const data = promise.data
-        this.setState({ searchResults: data.slice(0,8) })
+        this.saveResults(data)
       }
     }
   }
@@ -44,12 +51,21 @@ class Navbar extends React.Component {
     this.setState({searchTerm})
   }
 
+  addMovie(chosenMovie) {
+    this.props.addMovie(chosenMovie)
+    this.setState({ searchTerm: '' })
+  }
+
+  saveResults(movies) {
+    this.setState({ searchResults: movies })
+  }
+
   render() {
     const { styles } = this.props
     const { searchTerm, searchResults } = this.state
     const open = searchTerm.length > 0
     return (
-      <div className={styles.grow}>
+      <div className={styles.root}>
         <AppBar className={styles.beige} position='static'>
           <Toolbar>
             <IconButton edge='start'>
@@ -57,7 +73,8 @@ class Navbar extends React.Component {
             </IconButton>
             <Typography className={styles.title}
                         variant='h6'
-                        noWrap>
+                        noWrap
+            >
               Lattice Movie Database
             </Typography>
             <div className={styles.search}>
@@ -65,7 +82,7 @@ class Navbar extends React.Component {
                 <SearchIcon />
               </div>
               <InputBase placeholder='Search...'
-                         id='search-box'
+                         id='search-field'
                          autoComplete='off'
                          value={searchTerm}
                          classes={{
@@ -74,9 +91,15 @@ class Navbar extends React.Component {
                          }}
                          inputProps={{ 'aria-label': 'search' }}
                          onChange={this.query}/>
-              <Popper open={open} anchorEl={document.getElementById('search-box')}>
+              <Popper open={open} anchorEl={document.getElementById('search-field')}>
                 <Paper className={styles.paper}>
-                  {searchResults.map(result => <MenuItem key={result.id}>{result.title}</MenuItem>)}
+                  {searchResults.slice(0,8).map(result => (
+                    <MenuItem key={result.id} onClick={() => this.addMovie(result)}>
+                      <Typography noWrap>
+                        {result.title}
+                      </Typography>
+                    </MenuItem>)
+                  )}
                 </Paper>
               </Popper>
             </div>
@@ -87,4 +110,4 @@ class Navbar extends React.Component {
   }
 }
 
-export default Navbar
+export default NavbarWrapper

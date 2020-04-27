@@ -5,43 +5,62 @@ const APIRoot = config.movieDatabase.MOVIE_URL
 const API_KEY = config.movieDatabase.API_KEY
 
 async function getPopularMovies() {
-    try {
-      const response = await axios({
-        method: 'GET',
-        url: `${APIRoot}/movie/popular?language=en-US&page=1`,
-        params: {
-          api_key: API_KEY
-        }
-      })
-      if (response.status == 200) {
-        const movies = response.data.results
-        return movies
+  try {
+    const response = await axios({
+      method: 'GET',
+      url: `${APIRoot}/movie/popular?language=en-US&page=1`,
+      params: {
+        api_key: API_KEY
       }
-    } catch (error) {
-      console.error(error)
+    })
+    if (response.status == 200) {
+      const movies = response.data.results
+      return movies
     }
+  } catch (error) {
+    console.error(error)
+  }
+}
+
+async function getCredits(movieId) {
+  try {
+    const response = await axios({
+      method: 'GET',
+      url: `${APIRoot}/movie/${movieId}/credits`,
+      params: {
+        api_key: API_KEY
+      }
+    })
+    if (response.status == 200) {
+      const credits = response.data
+      return credits
+    }
+  } catch (error) {
+    console.error(error)
+  }
 }
 
 async function searchMovies(queryString) {
-    try {
-      const response = await axios({
-        method: 'GET',
-        url: `${APIRoot}/search/movie?language=en-US&page=1&include_adult=false`,
-        params: {
-          query: queryString,
-          api_key: API_KEY
-        }
-      })
-      if (response.status == 200) {
-        const movies = response.data.results
-        return movies
+  try {
+    const response = await axios({
+      method: 'GET',
+      url: `${APIRoot}/search/movie?language=en-US&page=1&include_adult=false`,
+      params: {
+        query: queryString,
+        api_key: API_KEY
       }
-    } catch (error) {
-      console.error(error)
+    })
+    if (response.status == 200) {
+      const movies = response.data.results
+      return movies
     }
+  } catch (error) {
+    console.error(error)
+  }
 }
 
 module.exports = {
   getPopularMovies,
+  getCredits,
   searchMovies
 }
