@@ -1,7 +1,7 @@
-import { fade, makeStyles } from '@material-ui/core/styles';
+import { fade, makeStyles } from '@material-ui/core/styles'
 
 const useStyles = makeStyles(theme => ({
-  grow: {
+  root: {
     flexGrow: 1,
   },
   beige: {
@@ -52,9 +52,9 @@ const useStyles = makeStyles(theme => ({
     },
   },
   paper: {
-    width: 230,
+    width: 225,
     marginTop: 2,
   }
-}));
+}))
 
 export default useStyles
