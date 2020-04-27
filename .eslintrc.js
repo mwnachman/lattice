@@ -47,7 +47,7 @@ module.exports = {
       { "maximum": 2 }
     ],
     "react/prop-types": [
-      0
+      2
     ],
     "react/jsx-max-props-per-line": [
       "error",

@@ -20,6 +20,17 @@ app.get('/movie/popular', async ctx => {
   }
 })
 
+app.get('/movie/genres', async ctx => {
+  try {
+    const genres = await api.getMovieGenres()
+    ctx.status = 200
+    ctx.body = genres
+  } catch (error) {
+    ctx.status = 404
+    console.log('Error fetching genres: ', error)
+  }
+})
+
 app.get('/movie/:movieId/credits', async ctx => {
   try {
     const credits = await api.getCredits(ctx.params.movieId)

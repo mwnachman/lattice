@@ -1,5 +1,6 @@
 /* global process:false */
 import React from 'react'
+import PropTypes from 'prop-types'
 import axios from 'axios'
 import {
   AppBar,
@@ -73,8 +74,7 @@ class Navbar extends React.Component {
             </IconButton>
             <Typography className={styles.title}
                         variant='h6'
-                        noWrap
-            >
+                        noWrap>
               Lattice Movie Database
             </Typography>
             <div className={styles.search}>
@@ -108,6 +108,9 @@ class Navbar extends React.Component {
       </div>
     )
   }
+}
+Navbar.propTypes = {
+  addMovie: PropTypes.func
 }
 
 export default NavbarWrapper

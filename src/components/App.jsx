@@ -12,6 +12,7 @@ import { CssBaseline } from '@material-ui/core'
 import MovieDetail from './MovieDetail.jsx'
 import Navbar from './Navbar.jsx'
 import Popular from './Popular.jsx'
+import { getFromLocalStorage, addToLocalStorage } from '../utils/helpers'
 import * as config from '../../config/server.json'
 
 const APIRoot = config.BASE_URL[process.env.NODE_ENV || 'development']
@@ -21,6 +22,7 @@ class App extends React.Component {
     super(props)
     this.state = {
       movies: [],
+      genres: [],
       selectedMovie: null
     }
     this.addMovie = this.addMovie.bind(this)
@@ -29,19 +31,43 @@ class App extends React.Component {
 
   componentDidMount() {
     this.fetchPopularMovies()
+
+    const genres = getFromLocalStorage('genres')
+    if (genres) this.setState({ genres })
+    else this.fetchGenres()
   }
 
   async fetchPopularMovies() {
     const promise = await axios.get(`${APIRoot}/movie/popular`)
     const status = promise.status
     if (status == 200) {
-      const data = promise.data
-      this.setState({ movies: data })
+      const movies = promise.data
+      this.savePopularMovies(movies)
     }
   }
 
+  async fetchGenres() {
+    const promise = await axios.get(`${APIRoot}/movie/genres`)
+    const status = promise.status
+    if (status == 200) {
+      const data = promise.data
+      this.saveGenres(data)
+    }
+  }
+
+  savePopularMovies(movies) {
+    this.setState({ movies })
+  }
+
+  saveGenres(genres) {
+    this.setState({ genres })
+    addToLocalStorage('genres', genres)
+  }
+
   addMovie(value) {
-    this.setState({ movies: [value, ...this.state.movies] })
+    if (!this.state.movies.filter(movie => movie.id == value.id).length) {
+      this.setState({ movies: [value, ...this.state.movies] })
+    }
   }
 
   selectMovie(selectedMovie) {
@@ -49,14 +75,19 @@ class App extends React.Component {
   }
 
   render() {
-    const { movies, selectedMovie } = this.state
+    const { movies, genres, selectedMovie } = this.state
     return (
       <Router>
         <CssBaseline />
         <Navbar addMovie={this.addMovie}/>
         <Switch>
-          <Route path='/popular' render={() => <Popular movies={movies} selectMovie={this.selectMovie}/>} />
-          <Route path='/details' render={() => <MovieDetail movie={selectedMovie}/>}/>
+          <Route path='/popular' render={() => (
+            <Popular movies={movies}
+                     selectMovie={this.selectMovie}
+                     genres={genres}/>
+            )}/>
+          <Route path='/details' render={() => (
+            <MovieDetail movie={selectedMovie}/>)}/>
           <Route path="*" component={() => <Redirect to="/popular"/>}/>
         </Switch>
       </Router>
